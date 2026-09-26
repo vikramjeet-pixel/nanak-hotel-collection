@@ -1,26 +1,470 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
+/* ─── Tailwind Theme Tokens ─── */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-gold: var(--gold);
+  --color-gold-dark: var(--gold-dark);
+  --color-muted: var(--muted-text);
+  --color-alt: var(--alt);
+  --color-hairline: var(--hairline);
+  /* PoB Hotels type system. Licensed names come first and win if they're ever loaded;
+     otherwise the free Google stand-ins from layout.tsx are used. */
+  --font-sans: "franklin-gothic-urw", var(--font-franklin), "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Canela", var(--font-newsreader), Georgia, serif;
+  --font-display: "Coast", var(--font-italiana), Didot, Georgia, serif;
+  --font-ui: "haboro-contrast-normal", var(--font-tenor), Optima, "Segoe UI", sans-serif;
+  --font-mono: monospace;
+  --font-heading: "Coast", var(--font-italiana), Didot, Georgia, serif;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted-bg: var(--muted-bg);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ─── Enlarged type scale for readability ─── */
+@theme {
+  --text-xs: 0.875rem;
+  --text-sm: 1rem;
+  --text-base: 1.125rem;
+  --text-lg: 1.3rem;
+  --text-xl: 1.45rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.15rem;
+  --text-4xl: 2.6rem;
+  --text-5xl: 3.4rem;
+  --text-6xl: 4.2rem;
+}
+
+/* ─── NOIR PALETTE (default) ─── */
+:root,
+.noir {
+  --background: #0e0d0b;
+  --alt: #17150f;
+  --foreground: #eee6d4;
+  --muted-text: #a89f8c;
+  --gold: #d2ad5c;
+  --gold-dark: #b8953e;
+  --hairline: rgba(238, 230, 212, 0.16);
+
+  --card: #17150f;
+  --card-foreground: #eee6d4;
+  --popover: #17150f;
+  --popover-foreground: #eee6d4;
+  --primary: #d2ad5c;
+  --primary-foreground: #0e0d0b;
+  --secondary: #1f1c16;
+  --secondary-foreground: #eee6d4;
+  --muted-bg: #1f1c16;
+  --muted-foreground: #a89f8c;
+  --accent: #1f1c16;
+  --accent-foreground: #eee6d4;
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: rgba(238, 230, 212, 0.16);
+  --input: rgba(238, 230, 212, 0.16);
+  --ring: #d2ad5c;
+  --chart-1: #d2ad5c;
+  --chart-2: #a89f8c;
+  --chart-3: #eee6d4;
+  --chart-4: #17150f;
+  --chart-5: #0e0d0b;
+  --radius: 0.25rem;
+
+  --sidebar: #0e0d0b;
+  --sidebar-foreground: #eee6d4;
+  --sidebar-primary: #d2ad5c;
+  --sidebar-primary-foreground: #0e0d0b;
+  --sidebar-accent: #1f1c16;
+  --sidebar-accent-foreground: #eee6d4;
+  --sidebar-border: rgba(238, 230, 212, 0.16);
+  --sidebar-ring: #d2ad5c;
+}
+
+/* ─── IVORY PALETTE ─── */
+.ivory {
+  --background: #f5f0e6;
+  --alt: #ece5d6;
+  --foreground: #1b1813;
+  --muted-text: #5f574a;
+  --gold: #8a6a22;
+  --gold-dark: #725818;
+  --hairline: rgba(27, 24, 19, 0.16);
+
+  --card: #ece5d6;
+  --card-foreground: #1b1813;
+  --popover: #ece5d6;
+  --popover-foreground: #1b1813;
+  --primary: #8a6a22;
+  --primary-foreground: #f5f0e6;
+  --secondary: #e3dace;
+  --secondary-foreground: #1b1813;
+  --muted-bg: #e3dace;
+  --muted-foreground: #5f574a;
+  --accent: #e3dace;
+  --accent-foreground: #1b1813;
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: rgba(27, 24, 19, 0.16);
+  --input: rgba(27, 24, 19, 0.16);
+  --ring: #8a6a22;
+  --chart-1: #8a6a22;
+  --chart-2: #5f574a;
+  --chart-3: #1b1813;
+  --chart-4: #ece5d6;
+  --chart-5: #f5f0e6;
+
+  --sidebar: #0e0d0b;
+  --sidebar-foreground: #eee6d4;
+  --sidebar-primary: #d2ad5c;
+  --sidebar-primary-foreground: #0e0d0b;
+  --sidebar-accent: #1f1c16;
+  --sidebar-accent-foreground: #eee6d4;
+  --sidebar-border: rgba(238, 230, 212, 0.16);
+  --sidebar-ring: #d2ad5c;
+}
+
+/* ─── Base Layer ─── */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-weight: 400;
+    line-height: 1.6;
+    font-feature-settings: "ss01", "kern";
+    text-rendering: optimizeLegibility;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Arched frame — doorway shape */
+  .arch {
+    border-radius: 999px 999px 0 0;
+    overflow: hidden;
+  }
+
+  /* Hero video "door" — starting shape before scroll; JS widens it and flattens the top */
+  .hero-door {
+    width: 72%;
+    border-radius: 9999px 9999px 0 0;
+    will-change: width, border-radius;
+  }
+  @media (min-width: 768px) {
+    .hero-door {
+      width: 40%;
+    }
+  }
+
+  /* Small section label above a heading */
+  .eyebrow {
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* Section heading — Coast-style display capitals (PoB .c-heading__heading) */
+  .heading-editorial {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    line-height: 1.12;
+    text-wrap: balance;
+  }
+
+  /* Hero display headline — same face, larger and tighter */
+  .heading-display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    line-height: 1.05;
+  }
+
+  /* Card / item heading — Canela-style serif, mixed case (PoB .c-cta__heading) */
+  .heading-card {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    font-optical-sizing: auto;
+    text-wrap: balance;
+  }
+
+  /* Italic accent word inside a heading — the display face has no italic, so borrow the serif's */
+  .flourish {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  /* Nav link — underline grows from the left */
+  .link-underline {
+    position: relative;
+    display: inline-block;
+  }
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .link-underline:hover::after,
+  .link-underline:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* Text link with arrow — "Discover the hotel →" */
+  .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding-bottom: 0.35rem;
+    font-family: var(--font-ui);
+    font-size: 0.95rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--foreground);
+    border-bottom: 1px solid var(--gold);
+    transition: color 0.3s ease, gap 0.3s ease;
+  }
+  .link-arrow::after {
+    content: "→";
+    font-weight: 400;
+    color: var(--gold);
+    transition: transform 0.3s ease;
+  }
+  .link-arrow:hover {
+    color: var(--gold);
+  }
+  .link-arrow:hover::after {
+    transform: translateX(4px);
+  }
+
+  /* ─── Buttons ─── */
+  .btn {
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    height: 3.25rem;
+    padding: 0 2rem;
+    overflow: hidden;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color 0.35s ease, border-color 0.35s ease;
+  }
+  /* Fill that sweeps up from the bottom on hover */
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .btn:hover::before,
+  .btn:focus-visible::before {
+    transform: scaleY(1);
+  }
+  .btn:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
+  .btn-sm {
+    height: 2.5rem;
+    padding: 0 1.1rem;
+    font-size: 0.78rem;
+  }
+
+  /* Solid gold → fills with foreground colour */
+  .btn-primary {
+    background: var(--gold);
+    color: #0e0d0b;
+  }
+  .btn-primary::before {
+    background: var(--foreground);
+  }
+  .btn-primary:hover {
+    color: var(--background);
+  }
+
+  /* Thin outline → fills solid */
+  .btn-outline {
+    border-color: color-mix(in srgb, var(--foreground) 45%, transparent);
+    color: var(--foreground);
+  }
+  .btn-outline::before {
+    background: var(--foreground);
+  }
+  .btn-outline:hover {
+    border-color: var(--foreground);
+    color: var(--background);
+  }
+
+  /* For use over video/photos */
+  .btn-glass {
+    border-color: rgba(255, 255, 255, 0.55);
+    background: rgba(14, 13, 11, 0.35);
+    color: #fff;
+    backdrop-filter: blur(8px);
+  }
+  .btn-glass::before {
+    background: #fff;
+  }
+  .btn-glass:hover {
+    color: #0e0d0b;
+    border-color: #fff;
+  }
+
+  /* Hairline rule */
+  .hairline {
+    border: none;
+    border-top: 1px solid var(--hairline);
+  }
+
+  /* Image hover zoom */
+  .img-zoom {
+    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .img-zoom:hover {
+    transform: scale(1.04);
+  }
+
+  /* Scroll fade-up animation */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Italic serif numerals — "01", "02" */
+  .numeral {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--gold);
+    font-size: 1.1rem;
+  }
+
+  /* Pill shape utility */
+  .pill {
+    border-radius: 9999px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .fade-up {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .img-zoom:hover {
+    transform: none;
+  }
+  .link-underline::after,
+  .link-arrow,
+  .link-arrow::after,
+  .btn,
+  .btn::before {
+    transition: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ─── Room Carousel Scrollbar ─── */
+.room-carousel::-webkit-scrollbar {
+  display: none;
+}
+.room-carousel {
+  scrollbar-width: none;
+}
+
+/* ─── Footer always dark ─── */
+footer.site-footer {
+  --background: #0e0d0b;
+  --foreground: #eee6d4;
+  --muted-text: #a89f8c;
+  --gold: #d2ad5c;
+  --hairline: rgba(238, 230, 212, 0.16);
+  background: #0e0d0b;
+  color: #eee6d4;
+}
+
+/* ─── Placeholder for missing images ─── */
+.placeholder-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--alt);
+  color: var(--muted-text);
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  text-align: center;
+  padding: 1rem;
 }
