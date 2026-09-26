@@ -10,21 +10,15 @@ export function SiteFooter() {
         <div className="flex flex-col md:flex-row justify-between gap-12 mb-16">
           {/* Logo */}
           <div className="flex flex-col gap-4">
-            <Link href="/" className="flex flex-col items-start leading-none select-none" aria-label="Nanak Hotel Collection home">
-              <span className="font-display text-[2.1rem] tracking-[0.2em] text-[#eee6d4]">
-                NANAK
-              </span>
-              <span className="font-ui text-[0.74rem] tracking-[0.3em] text-[#d2ad5c] mt-1.5 whitespace-nowrap">
-                HOTEL COLLECTION
-              </span>
+            <Link href="/" className="select-none" aria-label="Nanak Hotel Collection home">
+              <Image
+                src="/logo-nanak-hotels.jpg"
+                alt="Nanak Hotels — two gold lions flanking an NH monogram"
+                width={160}
+                height={160}
+                className="mix-blend-lighten"
+              />
             </Link>
-            <Image
-              src="/logo.jpg"
-              alt="Nanak Hotels — two gold lions flanking an NH monogram"
-              width={140}
-              height={93}
-              className="mt-2 opacity-80"
-            />
           </div>
 
           {/* Hotels */}
